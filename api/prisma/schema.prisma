@@ -1,0 +1,100 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Category {
+  STARTER
+  MAIN_COURSE
+  DESSERT
+}
+
+model Meal {
+  id          Int          @id @default(autoincrement())
+  name        String       @db.VarChar(150)
+  description String?
+  category    Category
+  image       String?      @db.VarChar(500)
+
+  ingredients MealIngredient[]
+  schedules   MealSchedule[]
+  comments    Comment[]
+  ratings     Rating[]
+
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@map("meals")
+}
+
+model Ingredient {
+  id        Int              @id @default(autoincrement())
+  name      String           @unique @db.VarChar(100)
+
+  meals     MealIngredient[]
+
+  createdAt DateTime         @default(now())
+
+  @@map("ingredients")
+}
+
+model MealIngredient {
+  mealId       Int
+  ingredientId Int
+
+  quantity     Decimal?  @db.Decimal(10, 2)
+  unit         String?   @db.VarChar(30)
+
+  meal         Meal       @relation(fields: [mealId], references: [id], onDelete: Cascade)
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
+
+  @@id([mealId, ingredientId])
+  @@map("meal_ingredients")
+}
+
+model MealSchedule {
+  id            Int       @id @default(autoincrement())
+  mealId        Int
+  scheduledDate DateTime  @db.Date
+
+  meal          Meal      @relation(fields: [mealId], references: [id], onDelete: Cascade)
+
+  @@index([scheduledDate])
+  @@index([mealId])
+  @@map("meal_schedules")
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  mealId    Int
+  text      String   @db.Text
+
+  meal      Meal     @relation(fields: [mealId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([mealId])
+  @@map("comments")
+}
+
+model Rating {
+  id        Int      @id @default(autoincrement())
+  mealId    Int
+  score     Int
+
+  meal      Meal     @relation(fields: [mealId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([mealId])
+  @@map("ratings")
+}
