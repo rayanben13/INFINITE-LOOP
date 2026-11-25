@@ -2,7 +2,9 @@
 import {
     BookOpen,
     CalendarDays,
+    EggFriedIcon,
     History,
+    Home,
     TreeDeciduous,
 } from "lucide-react";
 import Link from "next/link";
@@ -10,6 +12,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 function Header() {
+
     const list = [
         {
             name: "Planner",
@@ -26,6 +29,11 @@ function Header() {
             icon: History,
             href: "/history",
         },
+        {
+            name: "Friends",
+            icon: EggFriedIcon,
+            href: "/friend",
+        },
     ];
 
     return (
@@ -39,7 +47,7 @@ function Header() {
                     mise
                 </h2>
                 <span className="">|</span>
-                <p className=" text-xl text-muted-foreground">
+                <p className=" text-md text-muted-foreground">
                     A little planning. A lot of good food
                 </p>
             </Link>
@@ -55,7 +63,7 @@ function Header() {
                             variant="ghost"
                             className="gap-2"
                         >
-                            <Link href={item.href}>
+                            <Link href={item.href} className="flex items-center gap-2">
                                 <Icon className="size-4" />
                                 {item.name}
                             </Link>
@@ -63,6 +71,11 @@ function Header() {
                     );
                 })}
             </nav>
+
+            <div>
+                <Home />
+
+            </div>
 
         </header>
     );

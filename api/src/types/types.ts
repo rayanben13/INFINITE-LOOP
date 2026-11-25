@@ -1,5 +1,6 @@
-export enum Category {
-    STARTER,
-    MAIN_COURSE,
-    DESSERT
+export interface AuthenticatedRequest extends Request {
+    user: {
+        userId: number;
+        email: string;
+    };
 }

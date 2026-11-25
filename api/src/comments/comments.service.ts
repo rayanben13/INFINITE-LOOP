@@ -10,7 +10,7 @@ import { CreateCommentDto } from './dto/create-comment.dto.js';
 export class CommentsService {
   constructor(private prisma: PrismaService) { }
 
-  async create(dto: CreateCommentDto) {
+  async create(userId: number, dto: CreateCommentDto) {
     const meal = await this.prisma.meal.findUnique({
       where: { id: dto.mealId },
     });
@@ -20,7 +20,10 @@ export class CommentsService {
     }
 
     return this.prisma.comment.create({
-      data: dto,
+      data: {
+        ...dto,
+        userId
+      },
     });
   }
 

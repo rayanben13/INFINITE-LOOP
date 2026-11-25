@@ -10,7 +10,7 @@ import { CreateRatingDto } from './dto/create-rating.dto.js';
 export class RatingsService {
   constructor(private prisma: PrismaService) { }
 
-  async create(dto: CreateRatingDto) {
+  async create(userId: number, dto: CreateRatingDto) {
     const meal = await this.prisma.meal.findUnique({
       where: { id: dto.mealId },
     });
@@ -20,7 +20,10 @@ export class RatingsService {
     }
 
     return this.prisma.rating.create({
-      data: dto,
+      data: {
+        userId,
+        ...dto
+      },
     });
   }
 

@@ -9,15 +9,16 @@ import { UpdateMealDto } from './dto/update-meal.dto.js';
 
 @Injectable()
 export class MealsService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) { }
 
   // Create meal
-  async create(dto: CreateMealDto) {
+  async create(planId: number, dto: CreateMealDto) {
     const { ingredients, ...mealData } = dto;
 
     return this.prisma.meal.create({
       data: {
         ...mealData,
+        planId,
 
         ingredients: {
           create: ingredients.map((item) => ({

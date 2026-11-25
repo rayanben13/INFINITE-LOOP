@@ -6,8 +6,10 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Req,
 } from '@nestjs/common';
 
+import * as types from '../types/types.js';
 import { CommentsService } from './comments.service.js';
 import { CreateCommentDto } from './dto/create-comment.dto.js';
 
@@ -16,8 +18,11 @@ export class CommentsController {
   constructor(private service: CommentsService) { }
 
   @Post()
-  create(@Body() dto: CreateCommentDto) {
-    return this.service.create(dto);
+  create(
+    @Req() req: types.AuthenticatedRequest,
+    @Body() dto: CreateCommentDto) {
+    const userId = req.user.userId;
+    return this.service.create(userId, dto);
   }
 
   @Get('meal/:mealId')

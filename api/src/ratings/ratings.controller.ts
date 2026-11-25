@@ -6,8 +6,10 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Req,
 } from '@nestjs/common';
 
+import * as types from '../types/types.js';
 import { CreateRatingDto } from './dto/create-rating.dto.js';
 import { RatingsService } from './ratings.service.js';
 
@@ -16,8 +18,12 @@ export class RatingsController {
   constructor(private readonly service: RatingsService) { }
 
   @Post()
-  create(@Body() dto: CreateRatingDto) {
-    return this.service.create(dto);
+  create(
+    @Req() req: types.AuthenticatedRequest,
+    @Body() dto: CreateRatingDto) {
+    const userId = req.user.userId;
+
+    return this.service.create(userId, dto);
   }
 
   @Get('meal/:mealId')

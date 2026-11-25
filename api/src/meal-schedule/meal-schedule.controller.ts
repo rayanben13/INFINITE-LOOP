@@ -9,12 +9,12 @@ import {
   Query,
 } from '@nestjs/common';
 import { CreateScheduleDto } from './dto/create-meal-schedule.dto.js';
-import { SchedulesService } from './meal-schedule.service.js';
+import { MealScheduleService } from './meal-schedule.service.js';
 
 
 @Controller('schedules')
-export class SchedulesController {
-  constructor(private service: SchedulesService) { }
+export class MealScheduleController {
+  constructor(private service: MealScheduleService) { }
 
   @Post()
   create(@Body() dto: CreateScheduleDto) {

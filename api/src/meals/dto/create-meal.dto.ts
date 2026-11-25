@@ -1,6 +1,7 @@
 import { Type } from "class-transformer";
 import { IsArray, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, ValidateNested } from "class-validator";
-import { Category } from "../../generated/prisma/client.js";
+import { Category } from "../../../generated/prisma/client.js";
+// import { Category } from "../../generated/prisma/client.js";
 
 class MealIngredientDto {
     @IsString()
@@ -32,6 +33,7 @@ export class CreateMealDto {
     @IsOptional()
     @IsString()
     image?: string;
+
 
     @IsArray()
     @ValidateNested({ each: true })

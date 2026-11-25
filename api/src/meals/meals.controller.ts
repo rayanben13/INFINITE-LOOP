@@ -7,10 +7,12 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 
 import { MealsService } from './meals.service.js';
 
+import { AuthGuard } from '@nestjs/passport';
 import { CreateMealDto } from './dto/create-meal.dto.js';
 import { UpdateMealDto } from './dto/update-meal.dto.js';
 
@@ -18,9 +20,10 @@ import { UpdateMealDto } from './dto/update-meal.dto.js';
 export class MealsController {
   constructor(private mealsService: MealsService) { }
 
+  @UseGuards(AuthGuard('jwt'))
   @Post()
-  create(@Body() dto: CreateMealDto) {
-    return this.mealsService.create(dto);
+  create(@Param('planId', ParseIntPipe) planId: number, @Body() dto: CreateMealDto) {
+    return this.mealsService.create(planId, dto);
   }
 
   @Get()

@@ -7,7 +7,7 @@ import { PrismaService } from '../prisma/prisma.service.js';
 import { CreateScheduleDto } from './dto/create-meal-schedule.dto.js';
 
 @Injectable()
-export class SchedulesService {
+export class MealScheduleService {
   constructor(private prisma: PrismaService) { }
 
   // Add meal to a date

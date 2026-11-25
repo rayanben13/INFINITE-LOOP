@@ -2,11 +2,13 @@ import { Module } from '@nestjs/common';
 import { createObserveModule } from '@nestjs/observe';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
-import { MealsModule } from './meals/meals.module.js';
+import { CommentsModule } from './comments/comments.module.js';
 import { IngredientsModule } from './ingredients/ingredients.module.js';
 import { MealScheduleModule } from './meal-schedule/meal-schedule.module.js';
-import { CommentsModule } from './comments/comments.module.js';
+import { MealsModule } from './meals/meals.module.js';
+import { PrismaModule } from './prisma/prisma.module.js';
 import { RatingsModule } from './ratings/ratings.module.js';
+import { AuthModule } from './auth/auth.module.js';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -25,8 +27,10 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     MealScheduleModule,
     CommentsModule,
     RatingsModule,
+    PrismaModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
